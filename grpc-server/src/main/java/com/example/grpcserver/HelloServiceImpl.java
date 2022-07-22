@@ -3,6 +3,7 @@ package com.example.grpcserver;
 import com.example.grpcserver.hello.HelloRequest;
 import com.example.grpcserver.hello.HelloResponse;
 import com.example.grpcserver.hello.HelloServiceGrpc;
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
 
@@ -21,11 +22,9 @@ public class HelloServiceImpl extends HelloServiceGrpc.HelloServiceImplBase {
                 .toString();
         System.out.println(greeting);
 
-        HelloResponse response = HelloResponse.newBuilder()
-                .setGreeting(greeting)
-                .build();
-
-        responseObserver.onNext(response);
-        responseObserver.onCompleted();
+        responseObserver.onError(
+            Status.NOT_FOUND
+                .withDescription("test exception")
+                .asRuntimeException());
     }
 }

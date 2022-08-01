@@ -20,8 +20,6 @@ spring:
           uri: https://localhost:6565
           predicates:
             - Path=/**
-          filters:
-            - AddResponseHeader=X-Request-header, header-value
 
 logging:
   level:
